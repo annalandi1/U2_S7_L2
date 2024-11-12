@@ -1,24 +1,35 @@
 const key = "notepad-memory"
 
-
 const saveButton = document.getElementById("save")
 const deleteButton = document.getElementById("delete")
-
 const textField = document.getElementById("nameInput")
 
-saveButton.addEventListener("click", function(){
+let savedArray= JSON.parse(localStorage.getItem(key)) || []
 
-    localStorage.setItem(key, textField.value)
+saveButton.addEventListener("click", function(){
+   const name = textField.value
+        if (name) {
+        savedArray.push(name)
+        localStorage.setItem(key, JSON.stringify(savedArray))
+        console.log(savedArray)
+        textField.value = ""
+    } else{
+        alert ("Insert your fucking name!!!")
+    }
 })
 
+
 deleteButton.addEventListener("click", function(){
-    const savedContent = document.getItem(key)
+    const savedContent = localStorage.getItem(key)
     if(!savedContent){
-        alert("insert your fucking name!")
+        alert("not found a fucking name!")
     }else{
         textField.value = ""
         localStorage.removeItem(key)
+        savedArray = []
+        console.log("All names deleted.")
     }
 })
+
 
 
